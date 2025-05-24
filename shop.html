@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ModaShop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png" alt="Logo">
+        ModaShop
+      </div>
+      <nav class="nav">
+        <a href="#" data-section="home">Start</a>
+        <a href="#" data-section="women">Kobieta</a>
+        <a href="#" data-section="men">Mężczyzna</a>
+      </nav>
+      <div class="profile">
+        <img src="img/cart.png" alt="Cart" class="cart-icon">
+        <img src="img/avatar.png" alt="Avatar" class="avatar">
+      </div>
+    </div>
+  </header>
+
+    <!-- Корзина -->
+    <div id="cart-modal" class="cart-modal hidden">
+        <div class="cart-content">
+          <h2>Twoja koszyk</h2>
+          <ul id="cart-items"></ul>
+          <div class="total">Suma: <span id="cart-total">0 zł</span></div>
+          <div class="delivery">
+            <h3>Dostawa</h3>
+            <label><input type="radio" name="delivery" value="0" checked> Darmowa dostawa (0 zł)</label><br>
+            <label><input type="radio" name="delivery" value="15"> Płatna dostawa (15 zł)</label>
+          </div>
+          <div class="address">
+            <h3>Adres dostawy</h3>
+            <input type="text" id="delivery-address" placeholder="Wprowadź adres">
+          </div>
+          <button id="checkout" class="btn">Zamów</button>
+          <button id="close-cart" class="btn secondary">Zamknij</button>
+        </div>
+      </div>
+
+  <!-- Контейнер подменяемого контента -->
+  <div id="main-content">
+    <!-- по умолчанию показываем стартовый hero + продукты -->
+    <section class="hero">
+      <div class="container hero-container">
+        <div class="hero-text">
+          <h1>Odkryj najnowsze trendy w <span>modzie</span></h1>
+          <p>Stylowe ubrania dla każdego. Znajdź swój idealny look!</p>
+        </div>
+        <div class="hero-image">
+          <img src="img/hero.png" alt="Hero">
+        </div>
+      </div>
+    </section>
+
+    <section class="products">
+      <div class="container">
+        <div class="products-header">
+          <h2>Popularne produkty</h2>
+        </div>
+        <div class="product-list">
+          <div class="product-card">
+            <img src="img/jacket.png" alt="Jeansowa kurtka">
+            <h3>Jeansowa kurtka</h3>
+            <p>Kobieta</p>
+            <span class="price">159 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/shirt.png" alt="Biała koszulka">
+            <h3>Biała koszulka</h3>
+            <p>Mężczyzna</p>
+            <span class="price">49 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/dress.png" alt="Czarna sukienka">
+            <h3>Czarna sukienka</h3>
+            <p>Kobieta</p>
+            <span class="price">129 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/hoodie.png" alt="Szara bluza">
+            <h3>Szara bluza</h3>
+            <p>Mężczyzna</p>
+            <span class="price">99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Подвал -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="logo">
+        <img src="img/logo.png" alt="ModaShop logo">
+        ModaShop
+      </div>
+      <div class="footer-links">
+        <a href="#">Regulamin</a>
+        <a href="#">Polityka prywatności</a>
+        <a href="#">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const content = {
+      home: document.getElementById('main-content').innerHTML,
+      women: `
+      <section class="hero">
+        <div class="hero-container container">
+          <div class="hero-text">
+            <h1><span>Ubrania dla kobiet</span> w niskiej cenie</h1>
+            <p>Stylowe, modne i wygodne ubrania, które podkreślą Twoją osobowość – bez nadwyrężania portfela.</p>
+          </div>
+          <div class="hero-image">
+            <img src="img/kobieta_main.png" alt="Modelka">
+          </div>
+        </div>
+      </section>
+      <section class="products container">
+        <div class="products-header"><h2>Najlepsze propozycje</h2></div>
+        <div class="product-list">
+          <div class="product-card">
+            <img src="img/k1.png" alt="Letnia sukienka"><h3>Letnia sukienka</h3><span class="price">49,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k2.png" alt="Oversize sweter"><h3>Oversize sweter</h3><span class="price">39,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k3.png" alt="Klasyczne jeansy"><h3>Klasyczne jeansy</h3><span class="price">59,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k4.png" alt="Biała koszulka"><h3>Biała koszulka</h3><span class="price">19,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k5.png" alt="Czarne legginsy"><h3>Czarne legginsy</h3><span class="price">24,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k6.png" alt="Kurtka jeansowa"><h3>Kurtka jeansowa</h3><span class="price">59,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k7.png" alt="Bluzka zielona"><h3>Bluzka zielona</h3><span class="price">29,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+          <div class="product-card">
+            <img src="img/k8.png" alt="Szare dresy"><h3>Szare dresy</h3><span class="price">34,99 zł</span>
+            <button class="btn">Do koszyka</button>
+          </div>
+        </div>
+      </section>
+    `,
+
+      men: `
+  <section class="hero">
+    <div class="hero-container container">
+      <div class="hero-text">
+        <h1><span>Ubrania męskie</span> w niskich cenach</h1>
+        <p>Nowoczesny styl i ponadczasowa wygoda – kolekcja dla mężczyzn nastawionych na jakość i oszczędność.</p>
+      </div>
+      <div class="hero-image">
+        <img src="img/men_main.png" alt="Model mężczyzna">
+      </div>
+    </div>
+  </section>
+  <section class="products container">
+    <div class="products-header"><h2>Najlepsze propozycje</h2></div>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="img/m1.png" alt="Koszula casual"><h3>Koszula casual</h3><span class="price">44,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m2.png" alt="Szara bluza"><h3>Szara bluza</h3><span class="price">34,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m3.png" alt="Klasyczne jeansy"><h3>Klasyczne jeansy</h3><span class="price">59,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m4.png" alt="Biała koszulka"><h3>Biała koszulka</h3><span class="price">19,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m5.png" alt="Czarne joggery"><h3>Czarne joggery</h3><span class="price">29,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m6.png" alt="Kurtka jeansowa"><h3>Kurtka jeansowa</h3><span class="price">59,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m7.png" alt="Polo zielone"><h3>Polo zielone</h3><span class="price">27,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+      <div class="product-card">
+        <img src="img/m8.png" alt="Szare dresy"><h3>Szare dresy</h3><span class="price">34,99 zł</span>
+        <button class="btn">Do koszyka</button>
+      </div>
+    </div>
+  </section>
+`,
+    };
+
+    document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const key = link.dataset.section;
+    document.getElementById('main-content').innerHTML = content[key] || '<p>Разdział nie znaleziony.</p>';
+    initCartButtons(); // <-- Повторно инициализируем кнопки после замены контента
+  });
+});
+
+    const cart = [];
+
+    function updateCartDisplay() {
+      const cartItems = document.getElementById('cart-items');
+      const totalDisplay = document.getElementById('cart-total');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.price} zł`;
+        cartItems.appendChild(li);
+        total += parseFloat(item.price.replace(',', '.'));
+      });
+
+      const deliveryPrice = document.querySelector('input[name="delivery"]:checked')?.value || 0;
+      totalDisplay.textContent = `${(total + parseFloat(deliveryPrice)).toFixed(2)} zł`;
+    }
+
+    function initCartButtons() {
+      document.querySelectorAll('.btn').forEach(button => {
+        if (button.textContent === 'Do koszyka') {
+          button.addEventListener('click', () => {
+            const card = button.closest('.product-card');
+            const name = card.querySelector('h3').textContent;
+            const price = card.querySelector('.price').textContent.replace(' zł', '');
+            cart.push({ name, price });
+            alert(`Dodano "${name}" do koszyka.`);
+          });
+        }
+      });
+    }
+
+    initCartButtons();
+
+    // Показ корзины
+    document.querySelector('.cart-icon').addEventListener('click', () => {
+      document.getElementById('cart-modal').classList.remove('hidden');
+      updateCartDisplay();
+    });
+
+    // Закрытие корзины
+    document.getElementById('close-cart').addEventListener('click', () => {
+      document.getElementById('cart-modal').classList.add('hidden');
+    });
+
+    // Перерасчет при смене доставки
+    document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+      radio.addEventListener('change', updateCartDisplay);
+    });
+
+    // Оформление заказа
+    document.getElementById('checkout').addEventListener('click', () => {
+      const address = document.getElementById('delivery-address').value.trim();
+      if (!address) {
+        alert('Wprowadź adres dostawy!');
+        return;
+      }
+
+      const total = document.getElementById('cart-total').textContent;
+      alert(`Zamówienie złożone!\nAdres: ${address}\nKwota do zapłaty: ${total}`);
+      cart.length = 0;
+      updateCartDisplay();
+      document.getElementById('delivery-address').value = '';
+      document.getElementById('cart-modal').classList.add('hidden');
+    });
+    
+  </script>
+
+</body>
+</html>
