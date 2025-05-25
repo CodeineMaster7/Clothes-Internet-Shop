@@ -22,7 +22,6 @@
       </nav>
       <div class="profile">
         <img src="img/cart.png" alt="Cart" class="cart-icon">
-        <img src="img/avatar.png" alt="Avatar" class="avatar">
       </div>
     </div>
   </header>
@@ -39,8 +38,9 @@
             <label><input type="radio" name="delivery" value="15"> Płatna dostawa (15 zł)</label>
           </div>
           <div class="address">
-            <h3>Adres dostawy</h3>
-            <input type="text" id="delivery-address" placeholder="Wprowadź adres">
+            <h3>Dane dostawy</h3>
+            <input type="text" id="delivery-name" placeholder="Imię i nazwisko"><br>
+            <textarea id="delivery-address" rows="3" placeholder="Wprowadź pełny adres dostawy"></textarea>
           </div>
           <button id="checkout" class="btn">Zamów</button>
           <button id="close-cart" class="btn secondary">Zamknij</button>
@@ -234,35 +234,41 @@
     const cart = [];
 
     function updateCartDisplay() {
-      const cartItems = document.getElementById('cart-items');
-      const totalDisplay = document.getElementById('cart-total');
-      cartItems.innerHTML = '';
-      let total = 0;
+  const cartItems = document.getElementById('cart-items');
+  const totalDisplay = document.getElementById('cart-total');
+  cartItems.innerHTML = '';
+  let total = 0;
 
-      cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - ${item.price} zł`;
-        cartItems.appendChild(li);
-        total += parseFloat(item.price.replace(',', '.'));
+  cart.forEach(item => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <img src="${item.img}" alt="${item.name}" style="width:40px; height:40px; object-fit:cover; border-radius:5px;">
+        <span>${item.name} - ${item.price} zł</span>
+      </div>
+    `;
+    cartItems.appendChild(li);
+    total += parseFloat(item.price.replace(',', '.'));
+  });
+
+  const deliveryPrice = document.querySelector('input[name="delivery"]:checked')?.value || 0;
+  totalDisplay.textContent = `${(total + parseFloat(deliveryPrice)).toFixed(2)} zł`;
+}
+
+function initCartButtons() {
+  document.querySelectorAll('.btn').forEach(button => {
+    if (button.textContent === 'Do koszyka') {
+      button.addEventListener('click', () => {
+        const card = button.closest('.product-card');
+        const name = card.querySelector('h3').textContent;
+        const price = card.querySelector('.price').textContent.replace(' zł', '');
+        const img = card.querySelector('img').getAttribute('src');
+        cart.push({ name, price, img });
+        alert(`Dodano "${name}" do koszyka.`);
       });
-
-      const deliveryPrice = document.querySelector('input[name="delivery"]:checked')?.value || 0;
-      totalDisplay.textContent = `${(total + parseFloat(deliveryPrice)).toFixed(2)} zł`;
     }
-
-    function initCartButtons() {
-      document.querySelectorAll('.btn').forEach(button => {
-        if (button.textContent === 'Do koszyka') {
-          button.addEventListener('click', () => {
-            const card = button.closest('.product-card');
-            const name = card.querySelector('h3').textContent;
-            const price = card.querySelector('.price').textContent.replace(' zł', '');
-            cart.push({ name, price });
-            alert(`Dodano "${name}" do koszyka.`);
-          });
-        }
-      });
-    }
+  });
+}
 
     initCartButtons();
 
@@ -284,19 +290,23 @@
 
     // Оформление заказа
     document.getElementById('checkout').addEventListener('click', () => {
-      const address = document.getElementById('delivery-address').value.trim();
-      if (!address) {
-        alert('Wprowadź adres dostawy!');
-        return;
-      }
+  const name = document.getElementById('delivery-name').value.trim();
+  const address = document.getElementById('delivery-address').value.trim();
 
-      const total = document.getElementById('cart-total').textContent;
-      alert(`Zamówienie złożone!\nAdres: ${address}\nKwota do zapłaty: ${total}`);
-      cart.length = 0;
-      updateCartDisplay();
-      document.getElementById('delivery-address').value = '';
-      document.getElementById('cart-modal').classList.add('hidden');
-    });
+  if (!name || !address) {
+    alert('Wprowadź imię, nazwisko oraz adres dostawy!');
+    return;
+  }
+
+  const total = document.getElementById('cart-total').textContent;
+  alert(`Zamówienie złożone!\nImię i nazwisko: ${name}\nAdres: ${address}\nKwota do zapłaty: ${total}`);
+
+  cart.length = 0;
+  updateCartDisplay();
+  document.getElementById('delivery-name').value = '';
+  document.getElementById('delivery-address').value = '';
+  document.getElementById('cart-modal').classList.add('hidden');
+});
     
   </script>
 
